@@ -15,6 +15,7 @@ const Index = () => {
     latency: 0
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [serverStatus, setServerStatus] = useState<'online' | 'offline' | 'checking'>('checking');
   const serverIP = 'fersik.aternos.me:37244';
 
   const copyIP = () => {
@@ -31,6 +32,13 @@ const Index = () => {
     try {
       const response = await fetch('https://functions.poehali.dev/2604d888-fbdf-48a6-bbf0-45261efff537');
       const data = await response.json();
+      
+      if (data.error) {
+        setServerStatus('offline');
+      } else {
+        setServerStatus('online');
+      }
+      
       setServerStats({
         online: data.online || 0,
         max: data.max || 0,
@@ -40,6 +48,7 @@ const Index = () => {
       setIsLoading(false);
     } catch (error) {
       console.error('Error fetching server stats:', error);
+      setServerStatus('offline');
       setIsLoading(false);
     }
   };
@@ -70,10 +79,26 @@ const Index = () => {
       
       <div className="relative">
         <section className="container mx-auto px-4 py-20 text-center animate-fade-in">
-          <Badge className="mb-6 gradient-primary text-white text-sm px-4 py-2">
-            <Icon name="Zap" className="w-4 h-4 mr-2" />
-            Сервер онлайн 24/7
-          </Badge>
+          <div className="flex items-center justify-center gap-3 mb-6">
+            {serverStatus === 'checking' && (
+              <Badge className="gradient-primary text-white text-sm px-4 py-2">
+                <Icon name="Loader2" className="w-4 h-4 mr-2 animate-spin" />
+                Проверка сервера...
+              </Badge>
+            )}
+            {serverStatus === 'online' && (
+              <Badge className="bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2">
+                <div className="w-2 h-2 rounded-full bg-white mr-2 animate-pulse" />
+                Сервер онлайн
+              </Badge>
+            )}
+            {serverStatus === 'offline' && (
+              <Badge className="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2">
+                <div className="w-2 h-2 rounded-full bg-white mr-2" />
+                Сервер оффлайн
+              </Badge>
+            )}
+          </div>
           
           <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
             FersikMine
