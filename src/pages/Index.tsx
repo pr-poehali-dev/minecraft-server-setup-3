@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -8,6 +8,13 @@ import { useToast } from '@/hooks/use-toast';
 const Index = () => {
   const { toast } = useToast();
   const [copiedIP, setCopiedIP] = useState(false);
+  const [serverStats, setServerStats] = useState({
+    online: 0,
+    max: 0,
+    version: '1.15.2',
+    latency: 0
+  });
+  const [isLoading, setIsLoading] = useState(true);
   const serverIP = 'fersik.aternos.me:37244';
 
   const copyIP = () => {
@@ -20,11 +27,34 @@ const Index = () => {
     setTimeout(() => setCopiedIP(false), 2000);
   };
 
+  const fetchServerStats = async () => {
+    try {
+      const response = await fetch('https://functions.poehali.dev/2604d888-fbdf-48a6-bbf0-45261efff537');
+      const data = await response.json();
+      setServerStats({
+        online: data.online || 0,
+        max: data.max || 0,
+        version: data.version || '1.15.2',
+        latency: data.latency || 0
+      });
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error fetching server stats:', error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchServerStats();
+    const interval = setInterval(fetchServerStats, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
   const stats = [
-    { label: 'Онлайн', value: '0', icon: 'Users' },
+    { label: 'Онлайн', value: isLoading ? '...' : `${serverStats.online}`, icon: 'Users' },
     { label: 'Кланов', value: '0', icon: 'Shield' },
     { label: 'Активных', value: '0', icon: 'TrendingUp' },
-    { label: 'Версия', value: '1.15.2', icon: 'Package' },
+    { label: 'Версия', value: serverStats.version, icon: 'Package' },
   ];
 
   const rules = [

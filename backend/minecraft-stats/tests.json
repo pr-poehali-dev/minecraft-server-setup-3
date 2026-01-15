@@ -1,0 +1,16 @@
+{
+  "tests": [
+    {
+      "name": "Get server stats",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "online": "number",
+        "max": "number",
+        "version": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
