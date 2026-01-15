@@ -21,9 +21,9 @@ const Index = () => {
   };
 
   const stats = [
-    { label: 'Онлайн', value: '247', icon: 'Users' },
-    { label: 'Кланов', value: '38', icon: 'Shield' },
-    { label: 'Активных', value: '1,542', icon: 'TrendingUp' },
+    { label: 'Онлайн', value: '0', icon: 'Users' },
+    { label: 'Кланов', value: '0', icon: 'Shield' },
+    { label: 'Активных', value: '0', icon: 'TrendingUp' },
     { label: 'Версия', value: '1.15.2', icon: 'Package' },
   ];
 
@@ -46,7 +46,7 @@ const Index = () => {
           </Badge>
           
           <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-            MineCraft
+            FersikMine
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
@@ -161,7 +161,7 @@ const Index = () => {
         <footer className="container mx-auto px-4 py-12 border-t border-primary/20 mt-16">
           <div className="text-center space-y-4">
             <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              MineCraft Server
+              FersikMine Server
             </h3>
             <p className="text-muted-foreground">
               Создано с ❤️ для игроков
