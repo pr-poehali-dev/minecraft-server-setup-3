@@ -24,7 +24,7 @@ const Index = () => {
     { label: 'Онлайн', value: '247', icon: 'Users' },
     { label: 'Кланов', value: '38', icon: 'Shield' },
     { label: 'Активных', value: '1,542', icon: 'TrendingUp' },
-    { label: 'Версия', value: '1.20', icon: 'Package' },
+    { label: 'Версия', value: '1.15.2', icon: 'Package' },
   ];
 
   const rules = [
@@ -121,7 +121,7 @@ const Index = () => {
                 </div>
                 <div>
                   <p className="font-semibold">Запустите Minecraft</p>
-                  <p className="text-muted-foreground">Версия 1.20 или выше</p>
+                  <p className="text-muted-foreground">Версия 1.15.2</p>
                 </div>
               </div>
               
